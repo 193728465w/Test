@@ -37,13 +37,19 @@
         </el-card>
       </div>
       <el-card style="height:280px">
+        <div ref="echarts1" style="height: 280px">
+        </div>
       </el-card>
       <div class="graph">
-        <el-card style="height:260p">
+        <el-card style="height:260px">
+          <div ref="echarts2" style="height: 260px">
 
+          </div>
         </el-card>
         <el-card style="height:260px">
+          <div ref="echarts3" style="height: 240px">
 
+          </div>
         </el-card>
       </div>
     </el-col>
@@ -52,6 +58,8 @@
 
 <script>
 import { getData } from '../api'
+import * as echarts from 'echarts'
+import {color} from "echarts";
 export default {
   data() {
     return {
@@ -142,9 +150,107 @@ export default {
     }
   },
   mounted() {
-    getData().then(( { data }) => {
-      const { tableData } = data.data
+    getData().then(({data}) => {
+      console.log(data)
+      const { tableData , userData ,videData } = data.data
       this.tableData = tableData
+      const echarts1 = echarts.init(this.$refs.echarts1)
+      var echars10option = {}
+      //处理数据xaxios
+      const { orderData } = data.data
+      const xAxis = Object.keys(orderData.data[0])
+      echars10option.xAxis = { data:xAxis }
+      echars10option.legend = { data:xAxis }
+      echars10option.yAxis = { }
+      echars10option.series= []
+      xAxis.forEach(key => {
+        echars10option.series.push({
+          name:key,
+          data:orderData.data.map(item => item[key]),
+          type:'line',
+        })
+      })
+      echarts1.setOption(echars10option)
+
+
+      //柱状图
+      const echarts2 = echarts.init(this.$refs.echarts2)
+      const echars20Option = {
+        legend: {
+          textStyle: {
+            color : "#333",
+          },
+        },
+        grid:{
+          left: "20%",
+        },
+        //提示框
+        tooltip: {
+          trigger:"axios",
+        },
+        xAxis:{
+          type:"category",
+          data:userData.map(item => item.data),
+          axisLine:{
+            linestyle:{
+              color : "#17b3a3",
+            },
+          },
+          axisLabel:{
+            interval:0,
+            color : "#333"
+          },
+        },
+        yAxis:[
+          {
+            type:"value",
+            axisLine:{
+            lineStyle: {
+              color: "#17b3a3"
+            }
+          },
+        },
+        ],
+            color: ["#2ec7c9","#b6a2de"],
+            series:[
+              {
+                name:'新增用户',
+                data:userData.map(item => item.new),
+                type:'bar'
+              },
+              {
+                name:'活跃用户',
+                data:userData.map(item => item.active),
+                type:'bar'
+              }
+            ]
+      }
+      echarts2.setOption(echars20Option)
+
+      //饼状图
+      const echarts3 = echarts.init(this.$refs.echarts3)
+      const echars30Option = {
+        tooltip: {
+          trigger: "item"
+        },
+        color:[
+          "#0f78f4",
+          "#dd536b",
+          "#9462e5",
+          "#a6a6a6",
+          "#e1bb22",
+          "#39c362",
+          "#3ed1cf"
+        ],
+        series:[
+          {
+            data:videData,
+            type:'pie'
+          }
+        ],
+      }
+          echarts3.setOption(echars30Option)
+
     })
   }
 }
@@ -170,7 +276,7 @@ export default {
 .login-info {
   p {
     line-height: 28px;
-    font-style: 14px;
+    //font-style: 14px;
     color: #999999;
 
     span {

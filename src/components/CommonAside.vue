@@ -79,6 +79,7 @@ export default {
       if(this.$route.path !== item.path ){
         this.$router.push(item.path)
       }
+
     },
   },
   computed: {
