@@ -25,21 +25,21 @@ export default {
       menuData: [
         {
           path: '/',
-          name: "Home",
+          name: 'home',
           label: "首页",
           icon: "s-home",
           url: "Home/Home",
         },
         {
-          path: '/Mall',
-          name: 'Mall',
+          path: '/mall',
+          name: 'mall',
           label: '商品管理',
           icon: 'video-play',
           url: 'MallManger/MallManger'
         },
         {
           path: '/User',
-          name: 'User',
+          name: 'user',
           label: '用户管理',
           icon: 'user',
           url: 'UserManger/UserManger'
@@ -50,14 +50,14 @@ export default {
           children: [
             {
               path: '/PageOne',
-              name: 'page1',
+              name: 'PageOne',
               label: '页面1',
               icon: 'setting',
               url: 'Other/PageOne'
             },
             {
               path: '/PageTwo',
-              name: 'page2',
+              name: 'PageTwo',
               label: '页面2',
               icon: 'setting',
               url: 'Other/PageTwo'
@@ -79,7 +79,7 @@ export default {
       if(this.$route.path !== item.path ){
         this.$router.push(item.path)
       }
-
+      this.$store.commit('selectMenu',item)
     },
   },
   computed: {
@@ -101,13 +101,13 @@ export default {
 <style lang="less" scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse){
   width: 200px;
-  min-height:400px;
+  height:100vh;
 }
 .el-submenu .el-menu-item {
   min-width:min-content
 }
 .el-menu {
-  height:100%;
+  height:100vh; 
   border-right: none;
   h3 {
     color:#fff;
