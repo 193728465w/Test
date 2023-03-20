@@ -19,52 +19,10 @@
 </template>
 
 <script>
+import Cookie from 'js-cookie'
 export default {
   data() {
     return {
-      menuData: [
-        {
-          path: '/',
-          name: 'home',
-          label: "首页",
-          icon: "s-home",
-          url: "Home/Home",
-        },
-        {
-          path: '/mall',
-          name: 'mall',
-          label: '商品管理',
-          icon: 'video-play',
-          url: 'MallManger/MallManger'
-        },
-        {
-          path: '/User',
-          name: 'user',
-          label: '用户管理',
-          icon: 'user',
-          url: 'UserManger/UserManger'
-        },
-        {
-          label: '其他',
-          icon: 'location',
-          children: [
-            {
-              path: '/PageOne',
-              name: 'PageOne',
-              label: '页面1',
-              icon: 'setting',
-              url: 'Other/PageOne'
-            },
-            {
-              path: '/PageTwo',
-              name: 'PageTwo',
-              label: '页面2',
-              icon: 'setting',
-              url: 'Other/PageTwo'
-            },
-          ]
-        },
-      ]
     };
   },
   methods: {
@@ -91,6 +49,10 @@ export default {
     haveChildren() {
       return this.menuData.filter(item => item.children)
     },
+    menuData(){
+      //判断当前数据，如果缓存中没有需要到store中获取
+      return JSON.parse(Cookie.get('menu')) || this.$store.state.tab.menu
+    },
     isCollapse() {
       return this.$store.state.tab.isCollapse
     }
@@ -107,7 +69,7 @@ export default {
   min-width:min-content
 }
 .el-menu {
-  height:100vh; 
+  height:100%; 
   border-right: none;
   h3 {
     color:#fff;

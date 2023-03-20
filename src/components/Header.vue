@@ -8,13 +8,13 @@
       </el-breadcrumb>
     </div>
     <div class="r-content">
-      <el-dropdown>
+      <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
           <img class="user" src="../assets/images/OIP-C.png">
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item>退出</el-dropdown-item>
+          <el-dropdown-item command="cancel">退出</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -24,6 +24,7 @@
 <script>
 import { computed } from 'vue'
 import { mapState } from 'vuex'
+import Cookie from 'js-cookie'
 export default {
   data() {
     return {}
@@ -31,8 +32,17 @@ export default {
   methods:{
     handleMenu() {
       this.$store.commit('collapseMenu')
+    },
+    handleCommand(command){
+      if(command === 'cancel'){
+        //清除Cook 中的token 
+        Cookie.remove('token')
+        //清除Cook 中的 menu 
+        Cookie.remove('menu')
+        this.$router.push('/login')
+      }
     }
-  },
+   },
   /////   ????????????//
   computed: {
     ...mapState({

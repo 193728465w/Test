@@ -6,6 +6,7 @@ import Main from '../views/Main.vue'
 import Mall from '../views/Mall.vue'
 import PageOne from '../views/PageOne.vue'
 import PageTwo from '../views/PageTwo.vue'
+import Login from '../views/Login.vue'
 Vue.use(VueRouter)
 
 //1.创建路由组件
@@ -16,35 +17,41 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name:'Main',
     component: Main,
     redirect :'/home',
     children: [
-      { 
-        path: 'home',
-        name:'home',
-        component: Home
-      },
-      { 
-        path: '/user',
-        name:'user',
-        component: User
-      },
-      { 
-        path: '/mall',
-        name:'mall',
-        component: Mall
-      },
-      {
-        path:'/PageOne',
-        name:'PageOne',
-        component: PageOne
-      },
-      {
-        path: 'PageTwo',
-        name:'PageTwo',
-        component: PageTwo
-      }
+      // { 
+      //   path: 'home',
+      //   name:'home',
+      //   component: Home
+      // },
+      // { 
+      //   path: '/user',
+      //   name:'user',
+      //   component: User
+      // },
+      // { 
+      //   path: '/mall',
+      //   name:'mall',
+      //   component: Mall
+      // },
+      // {
+      //   path:'/PageOne',
+      //   name:'PageOne',
+      //   component: PageOne
+      // },
+      // {
+      //   path: 'PageTwo',
+      //   name:'PageTwo',
+      //   component: PageTwo
+      // }
     ]
+  },
+  {
+    path:'/login',
+    name:'login',
+    component:Login
   }
 ]
 
